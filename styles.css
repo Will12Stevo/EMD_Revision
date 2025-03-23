@@ -1,0 +1,199 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+/* Container for Questions */
+#mcq-section, #fill-gap-section, #drag-drop-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* Individual Questions */
+#mcq-questions div, #fill-gap-questions div, #drag-drop-questions div {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+#mcq-questions p, #fill-gap-questions p, #drag-drop-questions p {
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+
+/* Radio Buttons and Labels */
+label {
+    display: block;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Input Fields for Fill-in-the-Gap */
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Correct Answer Styling */
+.correct-answer {
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #e8f5e9; /* Light green background */
+    color: #2e7d32; /* Dark green text */
+    display: none; /* Hidden by default */
+}
+
+.correct-answer.correct {
+    background-color: #e8f5e9; /* Light green for correct answers */
+    color: #2e7d32;
+}
+
+.correct-answer.incorrect {
+    background-color: #ffebee; /* Light red for incorrect answers */
+    color: #c62828;
+}
+
+/* Button Styling */
+button {
+    display: inline-block; /* Make buttons inline */
+    margin: 20px 10px; /* Add spacing between buttons */
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Refresh Button Specific Styling */
+button#refresh-button {
+    background-color: #27ae60; /* Green color for refresh button */
+}
+
+button#refresh-button:hover {
+    background-color: #219653; /* Darker green on hover */
+}
+
+/* Results Section */
+#results-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+#results {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Drag-and-Drop Styling */
+.draggable {
+    padding: 10px;
+    margin: 5px;
+    background-color: #3498db; /* Blue background */
+    color: rgb(144, 29, 29); /* White text */
+    border-radius: 5px;
+    cursor: grab;
+    display: inline-block;
+    font-weight: bold; /* Make text bold for better readability */
+    opacity: 1; /* Ensure full visibility */
+}
+
+.drop-target {
+    padding: 10px;
+    margin: 5px;
+    background-color: #f1c40f; /* Yellow background */
+    border: 2px dashed #e67e22; /* Orange dashed border */
+    border-radius: 5px;
+    min-height: 20px;
+    display: inline-block;
+    color: #2c3e50; /* Dark text for drop targets */
+    font-weight: bold; /* Make text bold for better readability */
+}
+
+.draggable.dragging {
+    opacity: 0.7; /* Slightly transparent when dragging */
+}
+
+.draggable.dragging {
+    opacity: 0.5;
+}
+
+/* Buttons Section */
+#buttons-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Drop Target Container */
+.drop-target-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Clear Button */
+.clear-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #e74c3c; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.clear-button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
