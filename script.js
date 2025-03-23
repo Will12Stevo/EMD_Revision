@@ -216,12 +216,6 @@ const dragDropQuestions = [
             ["Bilateral trade (traders exchange in pairs)", "Least centralized: __________"],
             ["Pool (traders submit multi-part bids to auctions with complex rules)", "Most centralized: __________"]
         ]
-    },
-    {
-        question: "Monopoly, privatisation: what is it and what are the pros and cons?",
-        draggables: [],
-        dropTargets: [],
-        correctAnswers: []
     }
 ];
 
