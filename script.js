@@ -139,6 +139,10 @@ const fillGapQuestions = [
         question: "High penetration of __________ energy with near-zero marginal costs leads to __________ prices when supply exceeds demand.",
         correctAnswer: ["variable renewable", "negative"]
     },
+    {
+        question: "The __________ problem occurs when generator revenues are insufficient to incentivize optimal investment levels.",
+        correctAnswer: "missing money"
+    }
 
 ];
 
