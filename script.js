@@ -142,6 +142,10 @@ const fillGapQuestions = [
     {
         question: "The __________ problem occurs when generator revenues are insufficient to incentivize optimal investment levels.",
         correctAnswer: "missing money"
+    },
+    {
+        question: "The __________ (from EMR) led to a reduction in coal power by ensuring a carbon floor price on the EU ETS Scheme.",
+        correctAnswer: "carbon price support"
     }
 
 ];
