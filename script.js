@@ -130,6 +130,10 @@ const fillGapQuestions = [
     {
         "question": "The __________ is responsible for avoiding outages, but is not legally liable for them.",
         "correctAnswer": "system operator"
+    },
+    {
+        "question": "Two platforms that helped balance cooperations and create significant economic surplus in 2023 were __________ and __________.",
+        "correctAnswer": ["PICASSO", "MARI"]
     }
 
 ];
@@ -219,6 +223,84 @@ const dragDropQuestions = [
         correctAnswers: [
             ["Bilateral trade (traders exchange in pairs)", "Least centralized: __________"],
             ["Pool (traders submit multi-part bids to auctions with complex rules)", "Most centralized: __________"]
+        ]
+    },
+    {
+        question: "Match the reserve type to its frequency control process:",
+        draggables: [
+            "Frequency Containment Reserves (FCR)",
+            "automatic Frequency Restoration Reserves (aFRR)",
+            "manual Frequency Restoration Reserves (mFRR)",
+            "Replacement Reserves (RR)"
+        ],
+        dropTargets: [
+            "Frequency Containment Process: __________",
+            "Frequency Restoration Process (Automatic): __________",
+            "Frequency Restoration Process (Manual): __________",
+            "Reserve Replacement Process: __________"
+        ],
+        correctAnswers: [
+            "Frequency Containment Reserves (FCR)",
+            "automatic Frequency Restoration Reserves (aFRR)",
+            "manual Frequency Restoration Reserves (mFRR)",
+            "Replacement Reserves (RR)"
+        ]
+    },
+    {
+        question: "Match the control order to its process:",
+        draggables: [
+            "Primary control",
+            "Secondary control",
+            "Tertiary control"
+        ],
+        dropTargets: [
+            "Frequency Containment Process: __________",
+            "Frequency Restoration Process: __________",
+            "Reserve Replacement Process: __________"
+        ],
+        correctAnswers: [
+            "Primary control",
+            "Secondary control",
+            "Tertiary control"
+        ]
+    },
+    {
+        question: "Sort the processes from fastest to slowest activation speed:",
+        draggables: [
+            "Frequency Containment Process",
+            "Frequency Restoration Process",
+            "Reserve Replacement Process"
+        ],
+        dropTargets: [
+            "1. Fastest: __________",
+            "2. Medium: __________",
+            "3. Slowest: __________"
+        ],
+        correctAnswers: [
+            "Frequency Containment Process",
+            "Frequency Restoration Process",
+            "Reserve Replacement Process"
+        ]
+    },
+    {
+        question: "Match each frequency control process with its typical response speed:",
+        draggables: [
+            "15 seconds",
+            "30 seconds", 
+            "15–60 minutes",
+            "Hours"
+        ],
+        dropTargets: [
+            "Frequency Containment Process (FCR): __________",
+            "Frequency Restoration Process (aFRR): __________",
+            "Reserve Replacement Process (RR) activation: __________",
+            "Reserve Replacement Process (RR) full response: __________"
+        ],
+        correctAnswers: [
+            "15 seconds",
+            "30 seconds",
+            "15–60 minutes",
+            "Hours"
         ]
     }
 ];
