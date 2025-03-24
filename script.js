@@ -128,12 +128,12 @@ const fillGapQuestions = [
         correctAnswer: "first-price sealed-bid"
     },
     {
-        "question": "The __________ is responsible for avoiding outages, but is not legally liable for them.",
-        "correctAnswer": "system operator"
+        question: "The __________ is responsible for avoiding outages, but is not legally liable for them.",
+        correctAnswer: "system operator"
     },
     {
-        "question": "Two platforms that helped balance cooperations and create significant economic surplus in 2023 were __________ and __________.",
-        "correctAnswer": ["PICASSO", "MARI"]
+        question: "Two platforms that helped balance cooperations and create significant economic surplus in 2023 were __________ and __________.",
+        correctAnswer: ["PICASSO", "MARI"]
     }
 
 ];
