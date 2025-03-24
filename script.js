@@ -126,6 +126,10 @@ const fillGapQuestions = [
     {
         question: "In a __________ auction, bidders typically bid slightly below their true valuation to maximize profit while maintaining a chance of winning. Highest bidder wins.",
         correctAnswer: "first-price sealed-bid"
+    },
+    {
+        "question": "The __________ is responsible for avoiding outages, but is not legally liable for them.",
+        "correctAnswer": "system operator"
     }
 
 ];
@@ -238,6 +242,7 @@ function getRandomQuestions(questions, maxQuestions) {
 let currentMCQs = [];
 let currentFillGaps = [];
 let currentDragDrops = [];
+let selectedOption = null;
 
 // Function to display multiple-choice questions
 function displayMCQQuestions() {
@@ -278,109 +283,169 @@ function displayFillGapQuestions() {
     });
 }
 
-// Function to display drag-and-drop questions
+// Function to display click-based drag-and-drop questions
 function displayDragDropQuestions() {
     const dragDropContainer = document.getElementById('drag-drop-questions');
     dragDropContainer.innerHTML = ''; // Clear previous questions
 
-    currentDragDrops = getRandomQuestions(dragDropQuestions, 5); // Get 1 random drag-and-drop question
+    currentDragDrops = getRandomQuestions(dragDropQuestions, 5); // Get random questions
     currentDragDrops.forEach((q, index) => {
         const questionDiv = document.createElement('div');
         questionDiv.innerHTML = `
             <p>${index + 1}. ${q.question}</p>
-            <div id="draggable-items${index}">
-                ${q.draggables.map((draggable, i) => `
-                    <div class="draggable" draggable="true" data-answer="${q.correctAnswers[i]}">${draggable}</div>
-                `).join('')}
-            </div>
-            <div id="drop-targets${index}">
-                ${q.dropTargets.map((target, i) => `
-                    <div class="drop-target-container">
-                        <div class="drop-target" data-answer="${q.correctAnswers[i]}">${target}</div>
-                        <button class="clear-button" onclick="clearDropTarget(this)">Clear</button>
-                    </div>
-                `).join('')}
+            <div class="clickable-items-container">
+                <div id="clickable-items${index}" class="clickable-items">
+                    ${q.draggables.map((draggable, i) => `
+                        <button class="clickable-option" data-answer="${q.correctAnswers[i]}" data-index="${i}" data-original-index="${i}">${draggable}</button>
+                    `).join('')}
+                </div>
+                <div id="drop-targets${index}" class="drop-targets">
+                    ${q.dropTargets.map((target, i) => {
+                        const parts = target.split('__________');
+                        return `
+                        <div class="drop-target-container">
+                            <div class="drop-target" data-answer="${q.correctAnswers[i]}" data-index="${i}">
+                                ${parts[0] || ''}
+                                <span class="dropped-text"></span>
+                                ${parts[1] || ''}
+                            </div>
+                            <button class="clear-button" onclick="clearDropTarget(this)">Clear</button>
+                        </div>
+                        `;
+                    }).join('')}
+                </div>
             </div>
         `;
         dragDropContainer.appendChild(questionDiv);
     });
 
-    // Add drag-and-drop event listeners
-    addDragDropListeners();
+    // Add click event listeners
+    addClickDropListeners();
 }
 
-// Function to clear a drop target
-function clearDropTarget(button) {
-    const dropTarget = button.previousElementSibling; // Get the drop target element
-    const draggableItem = dropTarget.querySelector('.draggable'); // Get the draggable item inside the drop target
-
-    if (draggableItem) {
-        // Move the draggable item back to the draggable area
-        const draggableItemsContainer = document.getElementById('draggable-items0'); // Assuming only one question is displayed
-        draggableItemsContainer.appendChild(draggableItem);
-
-        // Reset the drop target content
-        dropTarget.innerHTML = dropTarget.getAttribute('data-original-text') || dropTarget.innerHTML;
-    }
-}
-
-// Function to add drag-and-drop event listeners
-function addDragDropListeners() {
-    const draggableItems = document.querySelectorAll('.draggable');
-    const dropTargets = document.querySelectorAll('.drop-target');
-
-    let draggedItem = null;
-
-    draggableItems.forEach(item => {
-        item.addEventListener('dragstart', () => {
-            draggedItem = item;
-            item.classList.add('dragging');
-        });
-
-        item.addEventListener('dragend', () => {
-            draggedItem = null;
-            item.classList.remove('dragging');
+// Function to add click event listeners for click-to-select interaction
+function addClickDropListeners() {
+    // Clear any previous selection
+    selectedOption = null;
+    
+    // Add click event to all option buttons
+    document.querySelectorAll('.clickable-option').forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove selection from all buttons first
+            document.querySelectorAll('.clickable-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // If clicking the same button, deselect it
+            if (selectedOption === this) {
+                selectedOption = null;
+                return;
+            }
+            
+            // Select the clicked button
+            selectedOption = this;
+            this.classList.add('selected');
         });
     });
 
-    dropTargets.forEach(target => {
-        // Store the original text of the drop target
-        target.setAttribute('data-original-text', target.innerHTML);
-
-        target.addEventListener('dragover', (e) => {
-            e.preventDefault(); // Allow dropping
-        });
-
-        target.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (draggedItem && target.innerHTML.includes('__________')) {
-                target.innerHTML = target.innerHTML.replace('__________', draggedItem.textContent);
-                target.setAttribute('data-dropped', draggedItem.getAttribute('data-answer'));
+    // Add click event to all drop targets
+    document.querySelectorAll('.drop-target').forEach(target => {
+        target.addEventListener('click', function() {
+            // If we have a selected option, place it in the target
+            if (selectedOption) {
+                // Find the dropped-text span within this target
+                const droppedTextSpan = this.querySelector('.dropped-text');
+                
+                // Place the selected option in the target
+                droppedTextSpan.textContent = selectedOption.textContent;
+                this.setAttribute('data-dropped', selectedOption.getAttribute('data-answer'));
+                
+                // Remove the selected option from the options area
+                selectedOption.remove();
+                selectedOption = null;
+            } 
+            // If clicking on a filled target with no selection, clear it
+            else if (this.querySelector('.dropped-text').textContent) {
+                // Clear the dropped text
+                this.querySelector('.dropped-text').textContent = '';
+                this.removeAttribute('data-dropped');
             }
         });
     });
 }
 
-// Function to check drag-and-drop answers
+// Function to clear a drop target
+function clearDropTarget(button) {
+    const dropTarget = button.previousElementSibling;
+    const droppedTextSpan = dropTarget.querySelector('.dropped-text');
+    const droppedText = droppedTextSpan.textContent;
+    const answer = dropTarget.getAttribute('data-answer');
+    const originalIndex = dropTarget.getAttribute('data-index');
+    
+    // Only proceed if there's actually text to clear
+    if (droppedText) {
+        // Find the options container
+        const optionsContainer = document.getElementById(`clickable-items${dropTarget.closest('[id^="drop-targets"]').id.replace('drop-targets', '')}`);
+        
+        // Create a new button for the cleared option
+        const newOption = document.createElement('button');
+        newOption.className = 'clickable-option';
+        newOption.setAttribute('data-answer', answer);
+        newOption.setAttribute('data-index', originalIndex);
+        newOption.setAttribute('data-original-index', originalIndex);
+        newOption.textContent = droppedText;
+        
+        // Add click handler to the new button
+        newOption.addEventListener('click', function() {
+            // Remove selection from all buttons first
+            document.querySelectorAll('.clickable-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // If clicking the same button, deselect it
+            if (selectedOption === this) {
+                selectedOption = null;
+                return;
+            }
+            
+            // Select the clicked button
+            selectedOption = this;
+            this.classList.add('selected');
+        });
+        
+        // Add the option back to the container
+        optionsContainer.appendChild(newOption);
+        
+        // Clear the dropped text
+        droppedTextSpan.textContent = '';
+        dropTarget.removeAttribute('data-dropped');
+    }
+}
+
+// Function to check drag-and-drop answers (now click-based)
 function checkDragDropAnswers() {
     let correct = 0;
     const dropTargets = document.querySelectorAll('.drop-target');
+    
     dropTargets.forEach(target => {
         const correctAnswer = target.getAttribute('data-answer');
         const userAnswer = target.getAttribute('data-dropped');
+        
         if (correctAnswer === userAnswer) {
             correct++;
             target.style.backgroundColor = '#2ecc71'; // Green for correct
-        } else {
+        } else if (userAnswer) {
+            // Only mark as incorrect if there was an answer (don't mark empty ones)
             target.style.backgroundColor = '#e74c3c'; // Red for incorrect
         }
     });
-    return correct; // Return the number of correct answers
+    
+    return correct;
 }
 
 // Function to check answers and display results
 function checkAnswers() {
-    // Check drag-and-drop answers
+    // Check click-based questions
     const correctDragDrop = checkDragDropAnswers();
 
     // Check multiple-choice answers
@@ -388,14 +453,14 @@ function checkAnswers() {
     currentMCQs.forEach((q, index) => {
         const selectedOption = document.querySelector(`input[name="mcq${index}"]:checked`);
         const correctAnswerElement = document.getElementById(`mcq-correct-answer${index}`);
-        correctAnswerElement.style.display = 'block'; // Show the correct answer
+        correctAnswerElement.style.display = 'block';
 
         if (selectedOption && selectedOption.value === q.correctAnswer) {
             correctMCQ++;
-            correctAnswerElement.classList.add('correct'); // Add class for correct answer
+            correctAnswerElement.classList.add('correct');
             correctAnswerElement.classList.remove('incorrect');
         } else {
-            correctAnswerElement.classList.add('incorrect'); // Add class for incorrect answer
+            correctAnswerElement.classList.add('incorrect');
             correctAnswerElement.classList.remove('correct');
         }
     });
@@ -405,14 +470,14 @@ function checkAnswers() {
     currentFillGaps.forEach((q, index) => {
         const userAnswer = document.getElementById(`fill-gap${index}`).value.trim();
         const correctAnswerElement = document.getElementById(`fill-gap-correct-answer${index}`);
-        correctAnswerElement.style.display = 'block'; // Show the correct answer
+        correctAnswerElement.style.display = 'block';
 
         if (userAnswer.toLowerCase() === q.correctAnswer.toLowerCase()) {
             correctFillGap++;
-            correctAnswerElement.classList.add('correct'); // Add class for correct answer
+            correctAnswerElement.classList.add('correct');
             correctAnswerElement.classList.remove('incorrect');
         } else {
-            correctAnswerElement.classList.add('incorrect'); // Add class for incorrect answer
+            correctAnswerElement.classList.add('incorrect');
             correctAnswerElement.classList.remove('correct');
         }
     });
@@ -422,16 +487,16 @@ function checkAnswers() {
     results.innerHTML = `
         <p>Multiple Choice Questions: ${correctMCQ} out of ${currentMCQs.length} correct</p>
         <p>Fill in the Gap Questions: ${correctFillGap} out of ${currentFillGaps.length} correct</p>
-        <p>Drag-and-Drop Questions: ${correctDragDrop} out of ${document.querySelectorAll('.drop-target').length} correct</p>
+        <p>Click-to-Select Questions: ${correctDragDrop} out of ${document.querySelectorAll('.drop-target').length} correct</p>
     `;
 }
 
 // Function to refresh all questions
 function refreshAllQuestions() {
-    displayMCQQuestions(); // Refresh MCQs
-    displayFillGapQuestions(); // Refresh fill-in-the-gap questions
-    displayDragDropQuestions(); // Refresh drag-and-drop questions
-    document.getElementById('results').innerHTML = ''; // Clear previous results
+    displayMCQQuestions();
+    displayFillGapQuestions();
+    displayDragDropQuestions();
+    document.getElementById('results').innerHTML = '';
 }
 
 // Display questions when the page loads
@@ -450,24 +515,6 @@ window.onload = function() {
     const refreshButton = document.createElement('button');
     refreshButton.textContent = 'Refresh All Questions';
     refreshButton.onclick = refreshAllQuestions;
-    refreshButton.style.marginLeft = '10px'; // Add some spacing between buttons
+    refreshButton.style.marginLeft = '10px';
     document.getElementById('buttons-section').appendChild(refreshButton);
 };
-
-// Function to clear a drop target
-function clearDropTarget(button) {
-    // Find the drop target associated with the "Clear" button
-    const dropTarget = button.previousElementSibling;
-
-    // Check if there's a draggable item inside the drop target
-    const draggableItem = dropTarget.querySelector('.draggable');
-
-    if (draggableItem) {
-        // Move the draggable item back to the draggable area
-        const draggableItemsContainer = document.getElementById('draggable-items0'); // Assuming only one question is displayed
-        draggableItemsContainer.appendChild(draggableItem);
-
-        // Reset the drop target to its original state
-        dropTarget.innerHTML = dropTarget.getAttribute('data-original-text');
-    }
-}
