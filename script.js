@@ -134,7 +134,11 @@ const fillGapQuestions = [
     {
         question: "Two platforms that helped balance cooperations and create significant economic surplus in 2023 were __________ and __________.",
         correctAnswer: ["PICASSO", "MARI"]
-    }
+    },
+    {
+        question: "High penetration of __________ energy with near-zero marginal costs leads to __________ prices when supply exceeds demand.",
+        correctAnswer: ["variable renewable", "negative"]
+    },
 
 ];
 
