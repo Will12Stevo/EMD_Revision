@@ -146,6 +146,22 @@ const fillGapQuestions = [
     {
         question: "The __________ (from EMR) led to a reduction in coal power by ensuring a carbon floor price on the EU ETS Scheme.",
         correctAnswer: "carbon price support"
+    },
+    {
+        question: "In a Power Purchase Agreement (PPA), renewable developers benefit from cheaper finance due to reduced __________ risk, while corporate offtakers hedge their __________ price. Additionally, renewable PPAs may include bundled __________ of origin.",
+        correctAnswers: ["price", "energy", "certificates"]
+    },
+    {
+        question: "Disadvantages of PPAs include high __________ costs and some offtakers' reluctance toward __________-term commitments.",
+        correctAnswers: ["entry", "long"]
+    },
+    {
+        question: "Futures contracts are __________ for energy delivery traded on an __________, featuring highly __________ terms with orders matched by the exchange.",
+        correctAnswers: ["contracts", "exchange", "standardised"]
+    },
+    {
+        question: "Traders must deposit a __________ to open futures positions, adjusted daily via __________, with most contracts settled through __________ rather than physical delivery.",
+        correctAnswers: ["margin", "mark-to-market", "cash-set"]
     }
 
 ];
