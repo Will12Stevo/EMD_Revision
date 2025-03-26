@@ -162,6 +162,10 @@ const fillGapQuestions = [
     {
         question: "Traders must deposit a __________ to open futures positions, adjusted daily via __________, with most contracts settled through __________ rather than physical delivery.",
         correctAnswers: ["margin", "mark-to-market", "cash-set"]
+    },
+    {
+        question: "When agents bid truthfully under Locational Marginal Pricing (LMP), it maximizes __________, and the resulting allocation maximizes the __________ of agents given the __________ clearing price.",
+        correctAnswers: ["welfare", "profit", "market"]
     }
 
 ];
