@@ -166,6 +166,14 @@ const fillGapQuestions = [
     {
         question: "When agents bid truthfully under Locational Marginal Pricing (LMP), it maximizes __________, and the resulting allocation maximizes the __________ of agents given the __________ clearing price.",
         correctAnswers: ["welfare", "profit", "market"]
+    },
+    {
+        question: "__________ describes the market for flexibility and aims to become the internatioanl standard for smart energy systems",
+        correctAnswer: "USEF"
+    },
+    {
+        question: "__________ is a collection of terms that aim to provide a clear understanding of a domain (energy)",
+        correctAnswer: "SEAS Ontology"
     }
 
 ];
